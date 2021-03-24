@@ -1,0 +1,40 @@
+{% extends "todo/base.html" %}
+
+{% block title %}Add Venue{% endblock title %}
+
+{% block tasks %}
+<div class="ml-8 max-w-md max-auto m-4 text-xl font-bold ">
+  <h1>{{ todo.name }}</h1>
+</div>
+<div class="m-4 max-w-md max-auto">
+  <div>
+    {% if submitted %}
+    <p class="success">
+      Your Task was submitted successfully. Thank you.
+    </p>
+    {% else %}
+    <form action="/todo/addtask/{{todo.id}}/"  method="post">
+      {% csrf_token %}
+      {{ form }}
+      <input class="mt-4 px-4 py-1 border text-md border bg-blue-500  text-white rounded" type="submit"
+        value="Add Task">
+    </form>
+    {% endif %}
+  </div>
+
+  {% if todotasks %}
+  <div>
+    <ul class="p-4 border ">
+      {% for todotask in todotasks %}
+      <div class="mb-2 px-4 py-2 border text-md text-blue-700 shadow hover:bg-blue-300">
+        <li>{{todotask.name }}</li>
+      </div>
+      {% endfor %}
+    </ul>
+  </div>
+  {% else %}
+  <p>No todotask are available.</p>
+  {% endif %}
+</div>
+{% endblock tasks %}
+

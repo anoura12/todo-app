@@ -7,6 +7,6 @@ urlpatterns =[
     path('<int:todo_id>/', views.task,name ='task'),
     path('addtodo/', views.addtodo, name='addtodo'),
     path('addtask/<int:id>/', views.addtask, name='addtask'),
-    path('taskdone/<int:id>/', views.taskdone, name='taskdone'),
+    path('updatetask/<int:id>/', views.updatetask, name='updatetask'),
 
 ]

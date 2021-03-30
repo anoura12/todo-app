@@ -1,40 +1,94 @@
-{% extends "todo/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block title %}Add Venue{% endblock title %}
+<head>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 
-{% block tasks %}
-<div class="ml-8 max-w-md max-auto m-4 text-xl font-bold ">
-  <h1>{{ todo.name }}</h1>
-</div>
-<div class="m-4 max-w-md max-auto">
-  <div>
-    {% if submitted %}
-    <p class="success">
-      Your Task was submitted successfully. Thank you.
-    </p>
+  <script>
+    var taskform = "taskform{{todotask.id}}"
+    function update() {
+      document.getElementById(taskform).submit();
+    }
+  </script>
+</head>
+
+<body>
+
+  <div class="max-w-md mx-auto m-4 ">
+    <div class="grid grid-cols-6">
+      <div class="col-span-4 text-2xl font-bold">
+        {{ todo.name }}
+      </div>
+      <div class="col-span-2 hover:text-blue-700 text-lg">
+        <a href="/todo/">To-Do List</a>
+      </div>
+    </div>
+  </div>
+  <div class="max-w-md mx-auto font-bold ">
+
+  </div>
+  <div class="m-4 max-w-md mx-auto">
+    <div>
+      {% if submitted %}
+      <p class="success">
+        Your Task was submitted successfully. Thank you.
+      </p>
+      {% else %}
+      <form action="/todo/addtask/{{todo.id}}/" method="post">
+        {% csrf_token %}
+        <div class="flex mb-2">
+          <div class="px-4 py-1 border border-gray-500 focus:border-blue-500 rounded">
+            {{ form.name }}
+          </div>
+          <div>
+            <input class="ml-2 px-4 py-1 border text-md border bg-blue-500  text-white rounded" type="submit"
+              value="Add Task">
+          </div>
+        </div>
+      </form>
+      {% endif %}
+    </div>
+
+    {% if todotasks %}
+    <div>
+      <ul class="p-4 border ">
+        {% for todotask in todotasks %}
+        <div class="grid grid-cols-4 mb-2 px-4 py-2 border text-md text-blue-700 shadow hover:bg-blue-300">
+          {% if todotask.done == True %}
+          <div class="col-span-4">
+            <li class="line-through text-red-500">{{todotask.name}}</li>
+          </div>
+          {% else %}
+          <div class="col-span-3">
+            <li>{{todotask.name}}</li>
+          </div>
+          <div class="col-span-1 place-self-end">
+            <form id="taskform{{todotask.id}}" method="POST" action="/todo/updatetask/{{todotask.id}}/">
+              {% csrf_token %}
+              <!-- {{form.done}} -->
+              <!-- <input type="checkbox" id="id_done" onclick=update() name="done" value=true /> -->
+              <button class="" onclick=update() name="done" value=true>
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </button>
+              <input type="hidden" name="todo_id" value={{todo.id}} />
+              <input type="hidden" name="name" value="{{todotask.name}}" />
+              <input type="hidden" name="id" value={{todotask.id}} />
+            </form>
+          </div>
+
+          {% endif %}
+        </div>
+        {% endfor %}
+      </ul>
+    </div>
     {% else %}
-    <form action="/todo/addtask/{{todo.id}}/"  method="post">
-      {% csrf_token %}
-      {{ form }}
-      <input class="mt-4 px-4 py-1 border text-md border bg-blue-500  text-white rounded" type="submit"
-        value="Add Task">
-    </form>
+    <p>No todotask are available.</p>
     {% endif %}
   </div>
+</body>
 
-  {% if todotasks %}
-  <div>
-    <ul class="p-4 border ">
-      {% for todotask in todotasks %}
-      <div class="mb-2 px-4 py-2 border text-md text-blue-700 shadow hover:bg-blue-300">
-        <li>{{todotask.name }}</li>
-      </div>
-      {% endfor %}
-    </ul>
-  </div>
-  {% else %}
-  <p>No todotask are available.</p>
-  {% endif %}
-</div>
-{% endblock tasks %}
-
+</html>

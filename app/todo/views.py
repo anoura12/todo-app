@@ -58,15 +58,30 @@ def addtask(request,id):
 
     return render(request, 'todo/task.html' , context)
 
-def taskdone(request,id):
-    print("hello")
+def updatetask(request,id):
     if request.method == 'POST':
-        task = Task.objects.get(pk=id)
-        form = TaskForm(instance=task, data=request.POST)
+        try:
+            # id = request.POST["id"]
+            name = request.POST["name"]
+            todoid = request.POST["todo_id"]
+            done = request.POST.get('done', False)
 
+            task = Task.objects.get(id=id)
+            print("TaSK :" + str(id))
+            print("TaSK Name :" + name )
+            print("TaSK Done :" +  str(done) )
+
+        except Task.DoesNotExist:
+            task = None
+        
+        form = TaskForm(instance=task, data=request.POST)
+        print("TaSK 3 :" )
         if form.is_valid():
+            print("TaSK 4 :" )
             form.save()
-            return HttpResponseRedirect('/todo/'+str(id))
+            print("TaSK 5 :" )
+            return HttpResponseRedirect('/todo/'+str(todoid))
+            # return HttpResponseRedirect('/todo/')
 
     else:
         form = TaskForm()
@@ -74,5 +89,5 @@ def taskdone(request,id):
     context = {
         'form':form
     }
-
+    print("TaSK 6 :" )
     return render(request, 'todo/task.html' , context)

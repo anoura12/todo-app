@@ -1,12 +1,12 @@
 {% extends "todo/base.html" %}
 
-{% block title %}Anouka Todo Application{% endblock title %}
+{% block title %} Todo Application{% endblock title %}
 
 {% block todolist %}
-<div class="ml-8 max-w-md max-auto m-4 text-xl font-bold ">
-  My To-Do Application
+<div class="m-4 text-center max-w-md mx-auto text-3xl font-bold ">
+  To-Do List
 </div>
-<div class="m-4 max-w-md max-auto">
+<div class="m-4 max-w-md mx-auto">
   <div>
     {% if submitted %}
     <p class="success">
@@ -15,9 +15,15 @@
     {% else %}
     <form action="/todo/addtodo/" method="post">
       {% csrf_token %}
-      {{ form }}
-      <input class="mt-4 px-4 py-1 border text-md border text-white bg-blue-500 rounded" type="submit"
-        value="New Todo List">
+      <div class="flex ml-8 mb-2">
+        <div class="px-4 py-1 border border-gray-500 focus:border-blue-500 rounded">
+          {{ form.name }}
+        </div>
+        <div>
+          <input class="ml-2 px-4 py-1 border text-md border bg-blue-500  text-white rounded" type="submit"
+            value="New Todo List">
+        </div>
+      </div>
     </form>
     {% endif %}
   </div>
@@ -26,7 +32,7 @@
 
   <ul class="p-4 border max-auto ">
     {% for todo in todolist %}
-    <div class="mb-2 px-4 py-2 border text-md text-blue-700 shadow hover:bg-green-300">
+    <div class="mb-2 px-4 py-2 border text-md text-blue-700 shadow hover:bg-gray-100">
       <li><a class="" href="{% url 'todo:task' todo.id %}">{{ todo.name }}</a>
       </li>
     </div>

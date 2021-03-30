@@ -3,7 +3,12 @@
 
 <head>
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-
+  
+  <script>
+    function update(){
+      document.getElementById("taskform"+"17").submit(); 
+    }
+  </script>
 </head>
 
 <body>
@@ -12,6 +17,9 @@
   </div>
   <div id="tasks">
     {% block tasks %}{% endblock %}
+  </div>
+  <div id="update">
+    {% block update %}{% endblock %}
   </div>
 </body>
 

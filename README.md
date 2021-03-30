@@ -4,7 +4,8 @@ This is a basic todo application where you can create a todo list with multiple 
 
 ### To-Do Page
 
-![Screenshot from 2021-03-30 19-40-10](https://user-images.githubusercontent.com/73518403/113006403-f402a980-9192-11eb-834e-5be577910def.png)
+![Screenshot from 2021-03-30 19-40-10](https://user-images.githubusercontent.com/73518403/113007135-93c03780-9193-11eb-8bf1-7095e649fb34.png)
+
 
 ![Screenshot from 2021-03-30 19-40-21](https://user-images.githubusercontent.com/73518403/113006522-1399d200-9193-11eb-8015-31410f75365e.png)
 
